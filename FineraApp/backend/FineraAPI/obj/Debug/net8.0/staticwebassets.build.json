@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "mB8lCYQuvfLan4l6jSrXFtCbc9FGafhhESOuoB5KlL0=",
+  "Source": "FineraAPI",
+  "BasePath": "_content/FineraAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

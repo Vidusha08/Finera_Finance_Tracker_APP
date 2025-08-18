@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zeW+xwjQ/J0=",
+  "dgSpecHash": "pCRjPIsHZmU=",
   "success": true,
-  "projectFilePath": "D:\\Flutter\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj",
+  "projectFilePath": "D:\\Flutter\\Finera_Finance_Tracker_APP\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\my\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\my\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

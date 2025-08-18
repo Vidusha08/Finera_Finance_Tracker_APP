@@ -24,10 +24,11 @@ namespace FineraAPI.Controllers
 
         private int GetUserId()
         {
-            return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            // Use the same method as CategoriesController for consistency
+            return int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         }
 
-        // GET: api/Budgets?month=8&year=2024
+        // GET: api/Budgets?month=8&year=2025
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BudgetDto>>> GetBudgets(
             [FromQuery] int? month = null,
@@ -64,6 +65,12 @@ namespace FineraAPI.Controllers
         {
             var userId = GetUserId();
 
+            // Additional validation for user ID
+            if (userId <= 0)
+            {
+                return BadRequest("Invalid user authentication");
+            }
+
             // Check if budget already exists for this category, month, and year
             var existingBudget = await _context.Budgets
                 .FirstOrDefaultAsync(b => b.UserId == userId && 
@@ -74,13 +81,23 @@ namespace FineraAPI.Controllers
             if (existingBudget != null)
                 return BadRequest("Budget already exists for this category and period");
 
-            // Verify category belongs to user or is default
+            // Verify category belongs to user or is default - using the same logic as CategoriesController
             var category = await _context.Categories
                 .FirstOrDefaultAsync(c => c.Id == createBudgetDto.CategoryId && 
-                                         (c.UserId == userId || c.IsDefault));
+                                         (c.IsDefault || c.UserId == userId));
 
             if (category == null)
-                return BadRequest("Invalid category");
+            {
+                // Better error message for debugging
+                var availableCategories = await _context.Categories
+                    .Where(c => c.IsDefault || c.UserId == userId)
+                    .Select(c => new { c.Id, c.Name, c.IsDefault, c.UserId })
+                    .ToListAsync();
+
+                return BadRequest($"Invalid category ID: {createBudgetDto.CategoryId}. " +
+                    $"User ID: {userId}. " +
+                    $"Available categories: [{string.Join(", ", availableCategories.Select(c => $"ID:{c.Id} Name:{c.Name} Default:{c.IsDefault}"))}]");
+            }
 
             var budget = new Budget
             {
@@ -98,18 +115,23 @@ namespace FineraAPI.Controllers
             // Calculate spent amount from existing transactions
             await UpdateBudgetSpentAmount(budget.Id);
 
+            // Refresh the budget to get the updated spent amount
+            var updatedBudget = await _context.Budgets
+                .Include(b => b.Category)
+                .FirstAsync(b => b.Id == budget.Id);
+
             var budgetDto = new BudgetDto
             {
-                Id = budget.Id,
-                CategoryId = budget.CategoryId,
-                CategoryName = category.Name,
-                CategoryType = category.Type,
-                Amount = budget.Amount,
-                SpentAmount = budget.SpentAmount,
-                Month = budget.Month,
-                Year = budget.Year,
-                RemainingAmount = budget.Amount - budget.SpentAmount,
-                PercentageUsed = budget.Amount > 0 ? (budget.SpentAmount / budget.Amount) * 100 : 0
+                Id = updatedBudget.Id,
+                CategoryId = updatedBudget.CategoryId,
+                CategoryName = updatedBudget.Category.Name,
+                CategoryType = updatedBudget.Category.Type,
+                Amount = updatedBudget.Amount,
+                SpentAmount = updatedBudget.SpentAmount,
+                Month = updatedBudget.Month,
+                Year = updatedBudget.Year,
+                RemainingAmount = updatedBudget.Amount - updatedBudget.SpentAmount,
+                PercentageUsed = updatedBudget.Amount > 0 ? (updatedBudget.SpentAmount / updatedBudget.Amount) * 100 : 0
             };
 
             return CreatedAtAction(nameof(GetBudgets), budgetDto);
@@ -168,7 +190,25 @@ namespace FineraAPI.Controllers
                 .SumAsync(t => (decimal?)t.Amount) ?? 0;
 
             budget.SpentAmount = spentAmount;
+            budget.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+        }
+
+        // Debug endpoint to help troubleshoot (remove in production)
+        [HttpGet("debug/user")]
+        public IActionResult GetCurrentUser()
+        {
+            var userId = GetUserId();
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var allClaims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+            
+            return Ok(new 
+            { 
+                UserId = userId, 
+                UserIdClaim = userIdClaim,
+                AllClaims = allClaims
+            });
         }
     }
 }
+

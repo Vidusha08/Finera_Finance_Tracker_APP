@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Flutter\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj": {}
+    "D:\\Flutter\\Finera_Finance_Tracker_APP\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj": {}
   },
   "projects": {
-    "D:\\Flutter\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj": {
+    "D:\\Flutter\\Finera_Finance_Tracker_APP\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Flutter\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj",
+        "projectUniqueName": "D:\\Flutter\\Finera_Finance_Tracker_APP\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj",
         "projectName": "FineraAPI",
-        "projectPath": "D:\\Flutter\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj",
+        "projectPath": "D:\\Flutter\\Finera_Finance_Tracker_APP\\FineraApp\\backend\\FineraAPI\\FineraAPI.csproj",
         "packagesPath": "C:\\Users\\my\\.nuget\\packages\\",
-        "outputPath": "D:\\Flutter\\FineraApp\\backend\\FineraAPI\\obj\\",
+        "outputPath": "D:\\Flutter\\Finera_Finance_Tracker_APP\\FineraApp\\backend\\FineraAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\my\\AppData\\Roaming\\NuGet\\NuGet.Config"

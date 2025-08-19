@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../services/token_store.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,27 +20,39 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> login() async {
     setState(() => isLoading = true);
 
-    final response = await http.post(
-      Uri.parse('http://localhost:5049/api/Auth/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'usernameOrEmail': usernameController.text,
-        'password': passwordController.text,
-      }),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:5049/api/Auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'usernameOrEmail': usernameController.text,
+          'password': passwordController.text,
+        }),
+      );
 
-    if (!mounted) return; // safe context check
+      if (!mounted) return; // <-- Guard context use
 
-    setState(() => isLoading = false);
+      setState(() => isLoading = false);
 
-    if (response.statusCode == 200) {
-      Navigator.pushReplacementNamed(context, '/dashboard');
-    } else {
-      final error = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final token = data['token']; // ensure backend returns "token"
+        if (token != null) await TokenStore.saveToken(token);
+
+        if (!mounted) return; // Guard before using context
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      } else {
+        final error = jsonDecode(response.body);
+        if (!mounted) return; // Guard before using context
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error['message'] ?? 'Login failed')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return; // Guard before using context
+      setState(() => isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error['message'] ?? 'Login failed'),
-        ),
+        SnackBar(content: Text('An error occurred: $e')),
       );
     }
   }
@@ -79,7 +92,11 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: isLoading ? null : login,
                 style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 48)),
                 child: isLoading
-                    ? const CircularProgressIndicator()
+                    ? const SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                      )
                     : const Text('Login'),
               ),
               const SizedBox(height: 12),
@@ -94,4 +111,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 

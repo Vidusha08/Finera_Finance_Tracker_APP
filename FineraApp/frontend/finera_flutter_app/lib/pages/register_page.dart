@@ -32,12 +32,11 @@ class _RegisterPageState extends State<RegisterPage> {
       }),
     );
 
-    if (!mounted) return; // safe context check
-
+    if (!mounted) return;
     setState(() => isLoading = false);
 
     if (response.statusCode == 200) {
-      Navigator.pushReplacementNamed(context, '/dashboard');
+      Navigator.pushReplacementNamed(context, '/login');
     } else {
       final error = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -61,38 +60,20 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Finera Registration',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
+              const Text('Finera Registration', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
               const SizedBox(height: 24),
-              TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(labelText: 'Username'),
-              ),
+              TextField(controller: usernameController, decoration: const InputDecoration(labelText: 'Username')),
               const SizedBox(height: 12),
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
+              TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
               const SizedBox(height: 12),
-              TextField(
-                controller: fullNameController,
-                decoration: const InputDecoration(labelText: 'Full Name'),
-              ),
+              TextField(controller: fullNameController, decoration: const InputDecoration(labelText: 'Full Name')),
               const SizedBox(height: 12),
-              TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
+              TextField(controller: passwordController, decoration: const InputDecoration(labelText: 'Password'), obscureText: true),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: isLoading ? null : register,
                 style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 48)),
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Register'),
+                child: isLoading ? const CircularProgressIndicator() : const Text('Register'),
               ),
               const SizedBox(height: 12),
               TextButton(

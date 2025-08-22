@@ -39,8 +39,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         SnackBar(content: Text('Failed to load categories: $e')),
       );
     }
-    /*final items = await _service.fetchCategories();
-    setState(() => _categories = items);*/
+    
   }
 
   Future<void> _addOrEditCategory([CategoryModel? initial]) async {

@@ -1,7 +1,5 @@
 //pages/transactions_page.dart
 
-// lib/pages/transactions_page.dart
-
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import '../models/category.dart';

@@ -95,7 +95,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 )
               ],
             ),
-            // Type input REMOVED: we auto-derive from category (better UX + matches backend validation)
+            // Type input REMOVED: we auto-derive from category
           ]),
         ),
       ),

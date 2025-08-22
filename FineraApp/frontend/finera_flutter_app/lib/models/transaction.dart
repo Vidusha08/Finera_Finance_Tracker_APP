@@ -44,7 +44,6 @@ class TransactionModel {
     };
   }
 
-  // IMPORTANT: backend PUT requires CategoryId as well.
   Map<String, dynamic> toJsonUpdate() {
     return {
       'categoryId': categoryId,

@@ -1,7 +1,5 @@
 //services/transaction_service.dart
 
-// lib/services/transaction_service.dart
-
 import 'dart:convert';
 import 'api_client.dart';
 import '../models/transaction.dart';
@@ -29,10 +27,7 @@ class TransactionService {
     throw Exception('Failed to load transactions: ${res.statusCode}');
   }
 
-  /// Summary endpoint integration
-  /// Backend returns PascalCase:
-  /// { "totalIncome": decimal, "totalExpense": decimal, "balance": decimal, "month": int, "year": int }
-  /// We normalize to camelCase + expose `netBalance`.
+  // Summary endpoint integration
   Future<Map<String, dynamic>> getSummary({int? month, int? year}) async {
     final params = <String, String>{};
     if (month != null) params['month'] = month.toString();

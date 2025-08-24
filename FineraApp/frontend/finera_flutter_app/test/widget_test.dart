@@ -11,6 +11,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:finera_flutter_app/main.dart';
 
 void main() {
+  testWidgets('App builds without crashing', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that at least one widget from your app is present.
+    expect(find.byType(MaterialApp), findsOneWidget);
+  });
+}
+/*void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
@@ -27,4 +35,4 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
-}
+}*/

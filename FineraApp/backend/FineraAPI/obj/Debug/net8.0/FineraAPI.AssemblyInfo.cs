@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FineraAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3547c84ce0a14742c2db07cb8509fc7cec7471d1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4350e4dc0bb109940642df1091136b3dc25c8b6a")]
 [assembly: System.Reflection.AssemblyProductAttribute("FineraAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FineraAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

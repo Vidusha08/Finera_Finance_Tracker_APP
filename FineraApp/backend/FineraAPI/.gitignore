@@ -1,0 +1,12 @@
+# .NET build output
+bin/
+obj/
+
+# Visual Studio / VSCode files
+.vs/
+*.user
+*.suo
+
+# Secrets & configs (don’t expose)
+appsettings.Development.json
+appsettings.*.json

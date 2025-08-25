@@ -1,0 +1,6 @@
+@FineraAPI_HostAddress = http://localhost:5049
+
+GET {{FineraAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

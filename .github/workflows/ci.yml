@@ -1,0 +1,66 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - develop   # run CI on pushes to develop
+  pull_request:
+    branches:
+      - main      # run CI when PRs target main
+
+jobs:
+  backend-ci:
+    name: Backend (.NET API) Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.412'   # local backend .NET version (dotnet --version)
+
+      - name: Restore dependencies
+        run: dotnet restore ./FineraApp/backend/FineraAPI
+
+      - name: Build
+        run: dotnet build ./FineraApp/backend/FineraAPI --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test ./FineraApp/backend/FineraAPI --no-build --verbosity normal
+
+  frontend-ci:
+    name: Frontend (Flutter) Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.8'   
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: ./FineraApp/frontend/finera_flutter_app
+
+      - name: Analyze code
+        run: flutter analyze
+        working-directory: ./FineraApp/frontend/finera_flutter_app
+
+      - name: Clear Flutter test cache
+        run: flutter clean
+        working-directory: ./FineraApp/frontend/finera_flutter_app
+
+      - name: Run tests
+        run: flutter test
+        working-directory: ./FineraApp/frontend/finera_flutter_app
+
+      - name: Build web
+        run: flutter build web
+        working-directory: ./FineraApp/frontend/finera_flutter_app

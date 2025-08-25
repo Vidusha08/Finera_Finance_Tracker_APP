@@ -33,12 +33,12 @@ jobs:
     # Step 5: Get Flutter dependencies
     - name: Flutter Pub Get
       run: flutter pub get
-      working-directory: FineraApp/frontend
+      working-directory: FineraApp/frontend/finera_flutter_app
 
     # Step 6: Build Flutter Web
     - name: Flutter Web Build
       run: flutter build web --release
-      working-directory: FineraApp/frontend
+      working-directory: FineraApp/frontendfinera_flutter_app
 
     # Step 7: Deploy to Firebase Hosting
     - name: Deploy to Firebase Hosting

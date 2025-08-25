@@ -9,4 +9,4 @@ obj/
 
 # Secrets & configs (don’t expose)
 appsettings.Development.json
-appsettings.*.json
+#appsettings.*.json

@@ -42,7 +42,7 @@ jobs:
 
     # Step 7: Deploy to Firebase Hosting
     - name: Deploy to Firebase Hosting
+      working-directory: FineraApp/frontend/finera_flutter_app
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        working-directory: FineraApp/frontend/finera_flutter_app
       run: firebase deploy --only hosting --project your-firebase-project-id --token $FIREBASE_TOKEN

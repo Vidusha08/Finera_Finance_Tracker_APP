@@ -24,6 +24,10 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// AI Service + HttpClient
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IAIService, AIService>();
+
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

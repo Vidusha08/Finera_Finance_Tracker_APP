@@ -25,6 +25,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./FineraApp/backend/FineraAPI
 
+      - name: Set Gemini API Key
+        run: dotnet user-secrets set "Gemini:ApiKey" "${{ secrets.GEMINI_API_KEY }}" --project ./FineraApp/backend/FineraAPI
+
       - name: Build
         run: dotnet build ./FineraApp/backend/FineraAPI --configuration Release --no-restore
 

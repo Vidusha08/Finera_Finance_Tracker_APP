@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-/// Central registry of icons by name.
-/// Keep this list in sync with allowed icons in DB and UI.
 final Map<String, IconData> iconRegistry = {
   'work': Icons.work,
   'laptop': Icons.laptop,

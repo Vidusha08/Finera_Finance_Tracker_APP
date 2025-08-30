@@ -6,7 +6,6 @@ import '../models/category.dart';
 import '../services/budget_service.dart';
 import '../services/category_service.dart';
 import '../widgets/budget_form.dart';
-//import '../widgets/budget_card.dart'; // optional if you want list layout somewhere
 
 import 'navigation_page.dart';
 import 'dashboard_page.dart';

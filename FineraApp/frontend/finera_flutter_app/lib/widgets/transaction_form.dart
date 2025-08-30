@@ -95,7 +95,6 @@ class _TransactionFormState extends State<TransactionForm> {
                 )
               ],
             ),
-            // Type input REMOVED: we auto-derive from category
           ]),
         ),
       ),
@@ -152,7 +151,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 widget.onSubmit(tx);
               }
             },
-            //child: const Text("Save", style: TextStyle(color: Colors.white)),
+          
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
